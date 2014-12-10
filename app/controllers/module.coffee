@@ -1,9 +1,10 @@
 Controller    = require './base/controller'
 FooterView    = require '../views/footer'
 HeaderView    = require '../views/header'
-HomePageView  = require '../views/home/home-page'
+ThingView  = require '../views/thing/show'
+ThingsList  = require '../views/thing/index'
 
-module.exports = class HomeController extends Controller
+module.exports = class ModuleController extends Controller
 
   beforeAction: ->
     super
@@ -12,6 +13,11 @@ module.exports = class HomeController extends Controller
     @reuse 'footer', FooterView, region: 'footer'
 
   index: ->
-    @view = new HomePageView region: 'main'
+    @view = new ThingsList region: 'main'
+
+    @
+
+  show: ->
+    @view = new ThingView region: 'main'
 
     @
