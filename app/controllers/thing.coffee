@@ -21,7 +21,11 @@ module.exports = class ThingController extends Controller
 
     @
 
-  show: ->
-    @view = new ThingView region: 'main'
+  show: (params) ->
+    console.log params
+    @thing = new Thing
+      name: params.name
+      description: 'blah, blah, blah'
+    @view = new ThingView model: @thing, region: 'main'
 
     @
