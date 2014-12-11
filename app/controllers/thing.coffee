@@ -17,14 +17,14 @@ module.exports = class ThingController extends Controller
     @reuse 'footer', FooterView, region: 'footer'
 
   index: ->
-    things = data['@graph'].filter (obj) -> obj['@type'] == 'Thing'
+    things = data['@graph'].filter (obj) -> obj.type == 'Thing'
     @things = new Collection things, model: Thing
     @view = new ThingsList collection: @things, region: 'main'
 
     @
 
   show: (params) ->
-    @thing = new Thing _.find(data['@graph'],(obj) -> obj.name == params.name)
+    @thing = new Thing _.find(data['@graph'],(obj) -> obj.id == params.id)
     @view = new ThingView model: @thing, region: 'main'
     @thing.initCollections()
     @view.subview 'inputOf',  new ThingsList collection: @thing.inputOf, region: 'right'
