@@ -5,6 +5,8 @@ FooterView    = require '../views/footer'
 HeaderView    = require '../views/header'
 ThingView  = require '../views/thing/show'
 ThingsList  = require '../views/thing/index'
+data = require '../../data.json'
+_ = require 'underscore'
 
 module.exports = class ThingController extends Controller
 
@@ -15,17 +17,17 @@ module.exports = class ThingController extends Controller
     @reuse 'footer', FooterView, region: 'footer'
 
   index: ->
-    @things = new Collection null, model: Thing
-    @things.add [ { name: 'foo' }, { name: 'bar' } ]
+    things = data['@graph'].filter (obj) -> obj['@type'] == 'Thing'
+    @things = new Collection things, model: Thing
     @view = new ThingsList collection: @things, region: 'main'
 
     @
 
   show: (params) ->
-    console.log params
-    @thing = new Thing
-      name: params.name
-      description: 'blah, blah, blah'
+    @thing = new Thing _.find(data['@graph'],(obj) -> obj.name == params.name)
     @view = new ThingView model: @thing, region: 'main'
+    @thing.initCollections()
+    @view.subview 'inputOf',  new ThingsList collection: @thing.inputOf, region: 'right'
+    @view.subview 'outputOf',  new ThingsList collection: @thing.outputOf, region: 'left'
 
     @
