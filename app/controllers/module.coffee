@@ -5,6 +5,7 @@ FooterView    = require '../views/footer'
 HeaderView    = require '../views/header'
 ModuleView  = require '../views/module/show'
 ModulesList  = require '../views/module/index'
+ThingsList  = require '../views/thing/index'
 data = require '../../data.json'
 _ = require 'underscore'
 
@@ -28,7 +29,7 @@ module.exports = class ModuleController extends Controller
     @thing = new Module _.find(data['@graph'],(obj) -> obj.id == params.id)
     @view = new ModuleView model: @thing, region: 'main'
     @thing.initCollections()
-    @view.subview 'input',  new ModulesList collection: @thing.input, region: 'left'
-    @view.subview 'output',  new ModulesList collection: @thing.output, region: 'right'
+    @view.subview 'input',  new ThingsList collection: @thing.input, region: 'left'
+    @view.subview 'output',  new ThingsList collection: @thing.output, region: 'right'
 
     @
