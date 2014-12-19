@@ -5,10 +5,9 @@ _ = require 'underscore'
 
 module.exports = class Thing extends Model
 
-  initialize: (attr) ->
-    @initCollections = () =>
-      @inputOf = new Collection _.map(attr.inputOf, (id) ->
-        _.find data['@graph'], (obj) -> obj.id == id )
-      @outputOf = new Collection _.map(attr.outputOf, (id) ->
-        _.find data['@graph'], (obj) -> obj.id == id )
+  initCollections: () ->
+    @inputOf = new Collection _.map(@attributes.inputOf, (id) ->
+      _.find data['@graph'], (obj) -> obj.id == id )
+    @outputOf = new Collection _.map(@attributes.outputOf, (id) ->
+      _.find data['@graph'], (obj) -> obj.id == id )
 

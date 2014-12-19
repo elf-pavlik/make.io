@@ -6,7 +6,8 @@
     "backbone": "1.0.0",
     "chaplin": "1.0.0",
     "express": "3.4.4",
-    "hbs": "2.4.0"
+    "hbs": "2.4.0",
+    "uuid": "~2.0.1"
   },
   "devDependencies": {
     "backbone": "1.0.0",
