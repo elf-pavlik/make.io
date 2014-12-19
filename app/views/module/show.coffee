@@ -1,5 +1,7 @@
 View = require '../base/view'
 Editor = require '../../lib/editor'
+ThingsList  = require '../thing/index'
+EditThingsList  = require '../thing/index-edit'
 $ = require 'jquery'
 
 module.exports = class ModuleView extends View
@@ -19,14 +21,15 @@ module.exports = class ModuleView extends View
     console.log 'render'
   edit: (e) ->
     console.log 'edit'
-    $('.edit').show()
     $('button#edit').hide()
     $('button#save').show()
     Editor.edit 'name', 'input'
     Editor.edit 'description', 'textarea'
     Editor.edit 'process', 'textarea'
-    $('#left').append '<input type="input" property="input" class="edit io form-control">'
-    $('#right').append '<input type="input" property="output" class="edit io form-control">'
+    $('#left').append '<input type="input" property="input" class="edit io form-control" placeholder="new intput">'
+    $('#right').append '<input type="input" property="output" class="edit io form-control" placeholder="new output">'
+    @subview 'input',  new EditThingsList collection: @model.input, region: 'left'
+    @subview 'output',  new EditThingsList collection: @model.output, region: 'right'
   save: (e) ->
     console.log 'save'
     $('button#save').hide()
@@ -36,6 +39,8 @@ module.exports = class ModuleView extends View
     Editor.save 'description'
     Editor.save 'process'
     $('#left input, #right input').remove()
+    @subview 'input',  new ThingsList collection: @model.input, region: 'left'
+    @subview 'output',  new ThingsList collection: @model.output, region: 'right'
   add: (e) ->
     if e.keyCode == 13
       console.log e.target
@@ -59,6 +64,3 @@ module.exports = class ModuleView extends View
     'addedToDOM': 'hide'
   hide: ->
     $('button#save').hide()
-    $('.edit').hide()
-
-
